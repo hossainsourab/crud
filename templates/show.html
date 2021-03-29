@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block contant %}
+    <div class="row">
+      <div class="offset-2 col-8 offset-2">
+        <h4 class="text-center alert alert-info">Students List </h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+           <table class="table table-hover">
+
+               {% if  stud %}
+                   <tr>
+                        <th>ID</th>
+                        <th>Roll</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Action</th>
+                   </tr>
+                   <tbody>
+
+                       {% for st in stud %}
+                           <tr>
+                            <td>{{ st.id }}</td>
+                            <td>{{ st.roll }}</td>
+                            <td>{{ st.full_name }}</td>
+                            <td>{{ st.email }}</td>
+                            <td>{{ st.password }}</td>
+
+                            <td>
+                                <a href="{% url 'update' st.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{% url 'delete_data' st.id %}" method="POST" class="d-inline">
+                                {% csrf_token %}
+                                <input type="submit" class="btn btn-danger btn-sm"  value="Delete">
+                                </form>
+                            </td>
+                           </tr>
+
+                       {% endfor %}
+                   </tbody>
+
+                   {% else %}
+                   <h5 class="text-center alert alert-danger">No Data Found</h5>
+               {% endif %}
+           </table>
+        </form>
+        </div>
+        </div>
+
+{% endblock %}
